@@ -1,1 +1,6 @@
--e .
+aws-cdk.core
+
+aws-cdk-aws_apigateway
+aws-cdk-aws_dynamodb
+aws-cdk-aws_cognito
+aws-cdk.aws_lambda

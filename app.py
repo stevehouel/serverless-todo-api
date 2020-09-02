@@ -2,10 +2,10 @@
 
 from aws_cdk import core
 
-from serverless_crud_api.serverless_crud_api_stack import ServerlessCrudApiStack
+from todo_api.todo_api_stack import TodoApiStack
 
 
 app = core.App()
-ServerlessCrudApiStack(app, "serverless-crud-api")
+TodoApiStack(app, "todo-api")
 
 app.synth()

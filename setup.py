@@ -6,7 +6,7 @@ with open("README.md") as fp:
 
 
 setuptools.setup(
-    name="serverless_crud_api",
+    name="todo_api",
     version="0.0.1",
 
     description="An empty CDK Python app",
@@ -15,8 +15,8 @@ setuptools.setup(
 
     author="author",
 
-    package_dir={"": "serverless_crud_api"},
-    packages=setuptools.find_packages(where="serverless_crud_api"),
+    package_dir={"": "todo_api"},
+    packages=setuptools.find_packages(where="todo_api"),
 
     install_requires=[
         "aws-cdk.core==1.61.1",
