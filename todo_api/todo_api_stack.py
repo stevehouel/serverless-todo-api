@@ -47,13 +47,48 @@ class TodoApiStack(core.Stack):
         api_todos = api.root.add_resource("todos")
         api_todos_todo = api_todos.add_resource(r"{todo}")
 
+        authorizer = aws_apigateway.CfnAuthorizer(self, "TodoApiAuthorizer",
+            rest_api_id=api.rest_api_id,
+            type="COGNITO_USER_POOLS",
+            provider_arns=[user_pool.user_pool_arn],
+            identity_source="method.request.header.Authorizer",
+            name="authorizer"
+        )
+
+        # CORS Pre-flight
+        api_todos.add_cors_preflight(
+            allow_origins=["*"],
+            allow_headers=[
+                "Content-Type",
+                "X-Amz-Date",
+                "Authorization",
+                "X-Api-Key",
+                "x-requested-with"
+            ],
+            allow_methods=["GET", "POST", "OPTIONS"]
+        )
+        api_todos_todo.add_cors_preflight(
+            allow_origins=["*"],
+            allow_headers=[
+                "Content-Type",
+                "X-Amz-Date",
+                "Authorization",
+                "X-Api-Key",
+                "x-requested-with"
+            ],
+            allow_methods=["GET", "DELETE", "OPTIONS"]
+        )
+
         # GET /todos
         list_todos_function = PythonFunction(self, "ListTodosFunction",
             code=aws_lambda.Code.asset("src/list_todos"),
             environment=lambda_environment
         )
         table.grant_read_data(list_todos_function)
-        api_todos.add_method("GET", aws_apigateway.LambdaIntegration(list_todos_function))
+        api_todos.add_method("GET", aws_apigateway.LambdaIntegration(list_todos_function),
+            authorization_type=aws_apigateway.AuthorizationType.COGNITO,
+            authorizer=authorizer
+        )
 
         # POST /todos
         create_todo_function = PythonFunction(self, "CreateTodoFunction",
@@ -61,7 +96,10 @@ class TodoApiStack(core.Stack):
             environment=lambda_environment
         )
         table.grant_write_data(create_todo_function)
-        api_todos.add_method("POST", aws_apigateway.LambdaIntegration(create_todo_function))
+        api_todos.add_method("POST", aws_apigateway.LambdaIntegration(create_todo_function),
+            authorization_type=aws_apigateway.AuthorizationType.COGNITO,
+            authorizer=authorizer
+        )
 
         # GET /todos/{todo}
         get_todo_function = PythonFunction(self, "GetTodoFunction",
@@ -69,7 +107,10 @@ class TodoApiStack(core.Stack):
             environment=lambda_environment
         )
         table.grant_read_data(get_todo_function)
-        api_todos_todo.add_method("GET", aws_apigateway.LambdaIntegration(get_todo_function))
+        api_todos_todo.add_method("GET", aws_apigateway.LambdaIntegration(get_todo_function),
+            authorization_type=aws_apigateway.AuthorizationType.COGNITO,
+            authorizer=authorizer
+        )
 
         # DELETE /todos/{todo}
         delete_todo_function = PythonFunction(self, "DeleteTodoFunction",
@@ -77,4 +118,7 @@ class TodoApiStack(core.Stack):
             environment=lambda_environment
         )
         table.grant_write_data(delete_todo_function)
-        api_todos_todo.add_method("DELETE", aws_apigateway.LambdaIntegration(delete_todo_function))
+        api_todos_todo.add_method("DELETE", aws_apigateway.LambdaIntegration(delete_todo_function),
+            authorization_type=aws_apigateway.AuthorizationType.COGNITO,
+            authorizer=authorizer
+        )
