@@ -8,3 +8,14 @@ __pycache__
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+.idea
+
+# Parcel default cache directory
+.parcel-cache
+

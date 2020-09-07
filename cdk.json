@@ -1,8 +1,9 @@
 {
-  "app": "python3 app.py",
+  "app": "npx ts-node bin/cdk.ts",
   "context": {
     "@aws-cdk/core:enableStackNameDuplicates": "true",
     "aws-cdk:enableDiffNoFail": "true",
-    "@aws-cdk/core:stackRelativeExports": "true"
+    "@aws-cdk/core:stackRelativeExports": "true",
+    "@aws-cdk/core:newStyleStackSynthesis": true
   }
 }
