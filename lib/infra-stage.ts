@@ -4,7 +4,6 @@ import { CognitoStack } from './infra/cognito-stack';
 interface PipelineStageProps extends StageProps {
   readonly domainName: string;
   readonly callbackUrls: string[];
-  readonly logoutUrls: string[];
 }
 
 export class InfraStage extends Stage {
@@ -20,7 +19,6 @@ export class InfraStage extends Stage {
     const cognitoStack = new CognitoStack(this, 'Cognito', {
       domainName: props.domainName,
       callbackUrls: props.callbackUrls,
-      logoutUrls: props.logoutUrls
     });
 
     // Outputs

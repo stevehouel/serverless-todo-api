@@ -1,5 +1,5 @@
 import * as cdk from '@aws-cdk/core';
-import { CfnOutput } from '@aws-cdk/core';
+import {CfnOutput, Duration} from '@aws-cdk/core';
 import {
   CfnIdentityPool, CfnIdentityPoolRoleAttachment,
   Mfa, OAuthScope,
@@ -10,7 +10,6 @@ import {Role, WebIdentityPrincipal} from "@aws-cdk/aws-iam";
 interface CognitoStackProps extends cdk.StackProps {
   readonly domainName: string;
   readonly callbackUrls: string[];
-  readonly logoutUrls: string[];
 }
 
 export class CognitoStack extends cdk.Stack {
@@ -26,14 +25,25 @@ export class CognitoStack extends cdk.Stack {
     super(scope, id, props);
 
     const pool = new UserPool(this, 'UserPool', {
+      mfa: Mfa.OFF,
+      signInAliases: {
+        username: false,
+        email: true
+      },
       standardAttributes: {
-        email: {
+        fullname: {
           required: true,
-          mutable: true,
+          mutable: false,
         },
       },
-
-      mfa: Mfa.OFF,
+      passwordPolicy: {
+        minLength: 12,
+        requireLowercase: true,
+        requireUppercase: true,
+        requireDigits: true,
+        requireSymbols: true,
+        tempPasswordValidity: Duration.days(3),
+      },
     });
 
     // Create CUP domain
@@ -48,11 +58,10 @@ export class CognitoStack extends cdk.Stack {
       preventUserExistenceErrors: true,
       oAuth: {
         flows: {
-          authorizationCodeGrant: true,
+          implicitCodeGrant: true,
         },
-        scopes: [ OAuthScope.OPENID, OAuthScope.EMAIL, OAuthScope.PHONE, OAuthScope.PROFILE, OAuthScope.COGNITO_ADMIN ],
         callbackUrls: props.callbackUrls,
-      },
+      }
     });
 
     const identityPool = new CfnIdentityPool(this, 'IdentityPool', {
@@ -92,22 +101,22 @@ export class CognitoStack extends cdk.Stack {
 
     this.userPoolId = new CfnOutput(this, 'userPoolId', {
       value: pool.userPoolId,
-      exportName: 'TFCHubBack-UserPoolId'
+      exportName: 'ServerlessTodoApi-UserPoolId'
     });
 
     this.identityPoolId = new CfnOutput(this, 'identityPoolId', {
       value: identityPool.ref,
-      exportName: 'TFCHubBack-IdentityPoolId'
+      exportName: 'ServerlessTodoApi-IdentityPoolId'
     });
 
     this.userPoolAppClientId = new CfnOutput(this, 'userPoolAppClientId', {
       value: userPoolAppClient.userPoolClientId,
-      exportName: 'TFCHubBack-UserPoolAppClientId'
+      exportName: 'ServerlessTodoApi-UserPoolAppClientId'
     });
 
     this.userPoolDomain = new CfnOutput(this, 'userPoolDomain', {
       value: domain.baseUrl(),
-      exportName: 'TFCHubBack-UserPoolDomain'
+      exportName: 'ServerlessTodoApi-UserPoolDomain'
     });
 
     this.unauthRoleArn = new CfnOutput(this, 'UnauthRoleArn', {
