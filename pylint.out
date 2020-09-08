@@ -1,0 +1,14 @@
+src:0:1: E902 FileNotFoundError: [Errno 2] No such file or directory: 'src'
+lib/todo-api/setup.py:8:1: F401 'io.open' imported but unused
+lib/todo-api/setup.py:33:2: W292 no newline at end of file
+lib/todo-api/src/__init__.py:2:56: W292 no newline at end of file
+lib/todo-api/src/handlers/update_todo.py:6:1: E302 expected 2 blank lines, found 1
+lib/todo-api/src/handlers/update_todo.py:9:27: W292 no newline at end of file
+lib/todo-api/src/handlers/delete_todo.py:6:1: E302 expected 2 blank lines, found 1
+lib/todo-api/src/handlers/delete_todo.py:9:27: W292 no newline at end of file
+lib/todo-api/src/handlers/get_todo.py:10:27: W292 no newline at end of file
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/handlers/create_todo.py:6:1: E302 expected 2 blank lines, found 1
+lib/todo-api/src/handlers/create_todo.py:9:27: W292 no newline at end of file
+lib/todo-api/src/handlers/get_all_todos.py:6:1: E302 expected 2 blank lines, found 1
+lib/todo-api/src/handlers/get_all_todos.py:9:27: W292 no newline at end of file

@@ -1,10 +1,8 @@
 import {App, SecretValue, Stack, StackProps} from '@aws-cdk/core';
 import {CdkPipeline, SimpleSynthAction} from '@aws-cdk/pipelines';
-import { Repository } from '@aws-cdk/aws-codecommit';
 import { InfraStage } from './infra-stage';
 import {GitHubSourceAction, GitHubTrigger} from '@aws-cdk/aws-codepipeline-actions';
 import { Artifact } from '@aws-cdk/aws-codepipeline';
-import {LinuxBuildImage} from "@aws-cdk/aws-codebuild";
 
 interface PipelineStackProps extends StackProps {
   readonly repositoryName: string;

@@ -1,0 +1,6 @@
+-r dev-requirements.txt
+
+pytest
+pytest-cov
+undecorated
+mock
