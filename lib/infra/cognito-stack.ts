@@ -2,7 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import {CfnOutput, Duration} from '@aws-cdk/core';
 import {
   CfnIdentityPool, CfnIdentityPoolRoleAttachment,
-  Mfa, OAuthScope,
+  Mfa,
   UserPool,
 } from '@aws-cdk/aws-cognito';
 import {Role, WebIdentityPrincipal} from "@aws-cdk/aws-iam";

@@ -3,6 +3,7 @@ import {CdkPipeline, SimpleSynthAction} from '@aws-cdk/pipelines';
 import { InfraStage } from './infra-stage';
 import {GitHubSourceAction, GitHubTrigger} from '@aws-cdk/aws-codepipeline-actions';
 import { Artifact } from '@aws-cdk/aws-codepipeline';
+import {LinuxBuildImage} from "@aws-cdk/aws-codebuild";
 
 interface PipelineStackProps extends StackProps {
   readonly repositoryName: string;
@@ -37,6 +38,10 @@ export class PipelineStack extends Stack {
         // We need a build step to compile the TypeScript Lambda
         installCommand: 'make install',
         buildCommand: 'make build',
+        environment: {
+          buildImage: LinuxBuildImage.STANDARD_4_0,
+          privileged: true
+        }
       })
     });
 

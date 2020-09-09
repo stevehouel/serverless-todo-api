@@ -77,7 +77,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllTodosFunction.Arn}:live/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllTodosFunction.Arn}/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
@@ -116,7 +116,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateTodoFunction.Arn}:live/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateTodoFunction.Arn}/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
@@ -197,7 +197,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTodoFunction.Arn}:live/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTodoFunction.Arn}/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
@@ -236,7 +236,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTodoFunction.Arn}:live/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTodoFunction.Arn}/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
@@ -275,7 +275,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTodoFunction.Arn}:live/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTodoFunction.Arn}/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy

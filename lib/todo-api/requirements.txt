@@ -1,6 +1,0 @@
-boto3
-
-aws-lambda-powertools
-requests
-aioboto3
-aiohttp

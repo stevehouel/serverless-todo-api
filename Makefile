@@ -36,8 +36,8 @@ test:
 
 bootstrap: .venv
 	.venv/bin/pip install -e ./lib/todo-api
-ifneq ($(wildcard ./lib/todo-api/test-requirements.txt),)
-	.venv/bin/pip install -r ./lib/todo-api/test-requirements.txt
+ifneq ($(wildcard ./lib/todo-api/src/test-requirements.txt),)
+	.venv/bin/pip install -r ./lib/todo-api/src/test-requirements.txt
 endif
 
 .venv:
