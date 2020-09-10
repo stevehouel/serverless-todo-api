@@ -9,7 +9,7 @@ VIRTUALENV := $(PYTHON) -m venv
 
 export PYTHONUNBUFFERED := 1
 export PATH := var:$(PATH):$(VENV_DIR)/bin
-
+export TABLE_NAME := todo
 FUNCTION_DIR = lib/todo-api
 
 .DEFAULT_GOAL := lint
@@ -32,12 +32,12 @@ lint:
 	sh -c '. .venv/bin/activate; flake8 --tee --output-file=pylint.out --exclude=src/python-libs lib/todo-api'
 
 test:
-	sh -c '. .venv/bin/activate; py.test -x tests'
+	sh -c '. .venv/bin/activate; py.test -x lib/todo-api/tests'
 
 bootstrap: .venv
 	.venv/bin/pip install -e ./lib/todo-api
-ifneq ($(wildcard ./lib/todo-api/src/test-requirements.txt),)
-	.venv/bin/pip install -r ./lib/todo-api/src/test-requirements.txt
+ifneq ($(wildcard ./lib/todo-api/test-requirements.txt),)
+	.venv/bin/pip install -r ./lib/todo-api/test-requirements.txt
 endif
 
 .venv:

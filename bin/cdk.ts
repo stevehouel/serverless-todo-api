@@ -8,7 +8,7 @@ const app = new cdk.App();
 
 new PipelineStack(app, 'ServerlessTodoApi-PipelineStack', {
     repositoryName: "serverless-todo-api",
-    branchName: "master",
+    branchName: "main",
     ownerName: "nmoutschen",
     env: {
         account: '910421270336',

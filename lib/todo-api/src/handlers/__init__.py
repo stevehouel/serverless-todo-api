@@ -1,2 +1,0 @@
-
-""" Initialize handlers package """

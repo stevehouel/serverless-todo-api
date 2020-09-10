@@ -68,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Message'
       x-amazon-apigateway-integration:
         responses:
           default:
@@ -77,11 +77,19 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllTodosFunction.Arn}/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllTodosFunction.Arn}:live/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
     post:
+      x-amazon-apigateway-request-validator : all
+      parameters:
+        - in: body
+          name: item
+          schema:
+            $ref: '#/components/schemas/TodoItem'
+          required: true
+          description: a new Todo item
       summary: Create a new Todo item
       description: Create a new Todo item
       operationId: CreateTodo
@@ -97,7 +105,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TodoItem'
+                $ref: '#/components/schemas/Message'
         default:
           description: unexpected error
           headers:
@@ -107,7 +115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Message'
       x-amazon-apigateway-integration:
         responses:
           default:
@@ -116,7 +124,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateTodoFunction.Arn}/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateTodoFunction.Arn}:live/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
@@ -163,6 +171,7 @@ paths:
                 {}
         type: mock
     get:
+      x-amazon-apigateway-request-validator : params-only
       summary: Get a todo item by it's identifier
       description: Get a todo item by it's identifier
       operationId: GetTodo
@@ -188,7 +197,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Message'
       x-amazon-apigateway-integration:
         responses:
           default:
@@ -197,11 +206,19 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTodoFunction.Arn}/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTodoFunction.Arn}:live/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
     put:
+      x-amazon-apigateway-request-validator : all
+      parameters:
+        - in: body
+          name: item
+          schema:
+            $ref: '#/components/schemas/TodoItem'
+          required: true
+          description: a Todo item
       summary: Update a Todo item
       description: Update a Todo item
       operationId: UpdateTodo
@@ -227,7 +244,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Message'
       x-amazon-apigateway-integration:
         responses:
           default:
@@ -236,11 +253,12 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTodoFunction.Arn}/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTodoFunction.Arn}:live/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
     delete:
+      x-amazon-apigateway-request-validator : params-only
       summary: Delete a Todo item
       description: Delete a Todo item
       operationId: DeleteTodo
@@ -256,7 +274,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TodoItem'
+                $ref: '#/components/schemas/Message'
         default:
           description: unexpected error
           headers:
@@ -266,7 +284,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Message'
       x-amazon-apigateway-integration:
         responses:
           default:
@@ -275,13 +293,13 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTodoFunction.Arn}/invocations
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTodoFunction.Arn}:live/invocations
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
 components:
   schemas:
-    Error:
+    Message:
       type: object
       required:
         - code
@@ -294,8 +312,6 @@ components:
     TodoItem:
       type: object
       required:
-        - id
-        - updatedAt
         - title
       properties:
         id:
@@ -313,9 +329,9 @@ components:
       in: header
       x-amazon-apigateway-authtype: awsSigv4
 x-amazon-apigateway-request-validators:
-  Validate body:
-    validateRequestParameters: false
+  basic:
+    validateRequestParameters: true
     validateRequestBody: true
-  Validate query string parameters and headers:
+  params-only:
     validateRequestParameters: true
     validateRequestBody: false

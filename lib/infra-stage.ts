@@ -1,6 +1,5 @@
 import { CfnOutput, Construct, Stage, StageProps } from '@aws-cdk/core';
-import { CognitoStack } from './infra/cognito-stack';
-import {ApiStack} from "./infra/api-stack";
+import { InfraStack } from './infra-stack';
 
 interface PipelineStageProps extends StageProps {
   readonly domainName: string;
@@ -18,19 +17,17 @@ export class InfraStage extends Stage {
   constructor(scope: Construct, id: string, props: PipelineStageProps) {
     super(scope, id, props);
 
-    const cognitoStack = new CognitoStack(this, 'Cognito', {
+    const infraStack = new InfraStack(this, 'ServerlessTodoApi-Infra', {
       domainName: props.domainName,
       callbackUrls: props.callbackUrls,
     });
 
-    const apiStack = new ApiStack(this, 'Api', {});
 
     // Outputs
-    this.userPoolId = cognitoStack.userPoolId;
-    this.identityPoolId = cognitoStack.identityPoolId;
-    this.userPoolAppClientId = cognitoStack.userPoolAppClientId;
-    this.userPoolDomain = cognitoStack.userPoolDomain;
-
-    this.restApiId = apiStack.restApiId;
+    this.userPoolId = infraStack.userPoolId;
+    this.identityPoolId = infraStack.identityPoolId;
+    this.userPoolAppClientId = infraStack.userPoolAppClientId;
+    this.userPoolDomain = infraStack.userPoolDomain;
+    this.restApiId = infraStack.restApiId;
   }
 }
