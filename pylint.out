@@ -12,3 +12,117 @@ lib/todo-api/src/handlers/create_todo.py:6:1: E302 expected 2 blank lines, found
 lib/todo-api/src/handlers/create_todo.py:9:27: W292 no newline at end of file
 lib/todo-api/src/handlers/get_all_todos.py:6:1: E302 expected 2 blank lines, found 1
 lib/todo-api/src/handlers/get_all_todos.py:9:27: W292 no newline at end of file
+lib/todo-api/setup.py:8:1: F401 'io.open' imported but unused
+lib/todo-api/setup.py:33:2: W292 no newline at end of file
+lib/todo-api/tests/unit/core/test_response.py:34:80: E501 line too long (81 > 79 characters)
+lib/todo-api/tests/unit/core/test_response.py:50:1: W391 blank line at end of file
+lib/todo-api/tests/unit/core/test_request.py:28:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:69:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:89:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:97:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:131:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:151:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:159:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:193:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:215:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:223:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:263:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:265:80: E501 line too long (89 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:281:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:283:80: E501 line too long (94 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:299:80: E501 line too long (116 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:301:80: E501 line too long (94 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:319:80: E501 line too long (130 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:321:80: E501 line too long (89 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:324:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:329:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:332:80: E501 line too long (82 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:335:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:338:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:341:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:347:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:350:80: E501 line too long (82 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:358:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:37:80: E501 line too long (97 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:49:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:59:80: E501 line too long (100 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:76:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:125:80: E501 line too long (101 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:184:1: W391 blank line at end of file
+lib/todo-api/src/__init__.py:2:56: W292 no newline at end of file
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/core/request.py:57:80: E501 line too long (84 > 79 characters)
+lib/todo-api/src/core/response.py:12:80: E501 line too long (94 > 79 characters)
+lib/todo-api/src/core/decorator/api_endpoint.py:1:1: F401 'logging' imported but unused
+lib/todo-api/src/core/decorator/api_params.py:15:80: E501 line too long (82 > 79 characters)
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/handlers/todo.py:6:1: F401 'boto3.dynamodb.conditions.Key' imported but unused
+lib/todo-api/setup.py:8:1: F401 'io.open' imported but unused
+lib/todo-api/setup.py:33:2: W292 no newline at end of file
+lib/todo-api/tests/unit/core/test_response.py:34:80: E501 line too long (81 > 79 characters)
+lib/todo-api/tests/unit/core/test_response.py:50:1: W391 blank line at end of file
+lib/todo-api/tests/unit/core/test_request.py:27:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:68:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:88:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:96:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:130:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:150:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:158:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:192:80: E501 line too long (152 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:214:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:222:80: E501 line too long (150 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:262:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:264:80: E501 line too long (89 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:280:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:282:80: E501 line too long (94 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:298:80: E501 line too long (116 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:300:80: E501 line too long (94 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:317:80: E501 line too long (89 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:318:80: E501 line too long (86 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:320:80: E501 line too long (89 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:323:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:328:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:331:80: E501 line too long (82 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:334:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:337:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:340:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:346:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:349:80: E501 line too long (82 > 79 characters)
+lib/todo-api/tests/unit/core/test_request.py:357:80: E501 line too long (80 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:37:80: E501 line too long (97 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:49:80: E501 line too long (87 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:59:80: E501 line too long (100 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:76:80: E501 line too long (90 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:125:80: E501 line too long (101 > 79 characters)
+lib/todo-api/tests/unit/handlers/test_todo.py:184:1: W391 blank line at end of file
+lib/todo-api/src/__init__.py:2:56: W292 no newline at end of file
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/core/request.py:57:80: E501 line too long (84 > 79 characters)
+lib/todo-api/src/core/response.py:12:80: E501 line too long (94 > 79 characters)
+lib/todo-api/src/core/decorator/api_endpoint.py:1:1: F401 'logging' imported but unused
+lib/todo-api/src/core/decorator/api_params.py:15:80: E501 line too long (82 > 79 characters)
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/handlers/todo.py:6:1: F401 'boto3.dynamodb.conditions.Key' imported but unused
+lib/todo-api/setup.py:8:1: F401 'io.open' imported but unused
+lib/todo-api/setup.py:33:2: W292 no newline at end of file
+lib/todo-api/tests/unit/core/test_response.py:50:1: W391 blank line at end of file
+lib/todo-api/tests/unit/handlers/test_todo.py:184:1: W391 blank line at end of file
+lib/todo-api/src/__init__.py:2:56: W292 no newline at end of file
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/core/decorator/api_endpoint.py:1:1: F401 'logging' imported but unused
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/handlers/todo.py:6:1: F401 'boto3.dynamodb.conditions.Key' imported but unused
+lib/todo-api/src/__init__.py:2:56: W292 no newline at end of file
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/core/decorator/api_endpoint.py:1:1: F401 'logging' imported but unused
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/handlers/todo.py:6:1: F401 'boto3.dynamodb.conditions.Key' imported but unused
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/core/decorator/api_endpoint.py:1:1: F401 'logging' imported but unused
+lib/todo-api/src/handlers/__init__.py:2:36: W292 no newline at end of file
+lib/todo-api/src/main.py:32:5: F841 local variable 'e' is assigned to but never used
+lib/todo-api/src/main.py:2:1: F401 'sys' imported but unused
+lib/todo-api/src/main.py:18:1: W391 blank line at end of file
+lib/todo-api/src/handlers/todo.py:10:1: F401 'src.main.init' imported but unused
+lib/todo-api/src/main.py:2:1: F401 'sys' imported but unused
+lib/todo-api/src/main.py:18:1: W391 blank line at end of file

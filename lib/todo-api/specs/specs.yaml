@@ -96,7 +96,7 @@ paths:
       security:
         - default: []
       responses:
-        '200':
+        '201':
           description: Create a new Todo item
           headers:
             Access-Control-Allow-Origin:
@@ -105,7 +105,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Message'
+                type: string
         default:
           description: unexpected error
           headers:
@@ -314,7 +314,7 @@ components:
       required:
         - title
       properties:
-        id:
+        todoId:
           type: string
         updatedAt:
           type: string

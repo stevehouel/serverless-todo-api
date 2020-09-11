@@ -27,6 +27,8 @@ build:
 	yarn build
 	# Verify Python
 	@make lint
+	# Execute Test
+	@make test
 
 lint:
 	sh -c '. .venv/bin/activate; flake8 --tee --output-file=pylint.out --exclude=src/python-libs lib/todo-api'
