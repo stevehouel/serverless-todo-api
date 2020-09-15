@@ -45,7 +45,7 @@ endif
 bootstrap:
 	@make install
 	# Bootstrap AWS account
-	yarn cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+	CDK_NEW_BOOTSTRAP=1 yarn cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
 
 deploy: 
 	yarn cdk deploy
