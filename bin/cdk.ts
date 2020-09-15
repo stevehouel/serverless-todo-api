@@ -9,11 +9,7 @@ const app = new cdk.App();
 new PipelineStack(app, 'ServerlessTodoApi-PipelineStack', {
     repositoryName: "serverless-todo-api",
     branchName: "main",
-    ownerName: "nmoutschen",
-    env: {
-        account: '910421270336',
-        region: 'eu-west-1'
-    }
+    ownerName: "nmoutschen"
 });
 
 // Implement Infra Stage for developer environment

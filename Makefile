@@ -19,7 +19,7 @@ install:
 	# Install CDK dependencies
 	yarn install --frozen-lockfile
 	# Install Python dependencies
-	@make bootstrap
+	@make install-python
 
 
 build:
@@ -36,11 +36,19 @@ lint:
 test:
 	sh -c '. .venv/bin/activate; py.test -x lib/todo-api/tests'
 
-bootstrap: .venv
+install-python: .venv
 	.venv/bin/pip install -e ./lib/todo-api
 ifneq ($(wildcard ./lib/todo-api/test-requirements.txt),)
 	.venv/bin/pip install -r ./lib/todo-api/test-requirements.txt
 endif
+
+bootstrap:
+	@make install
+	# Bootstrap AWS account
+	yarn cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+
+deploy: 
+	yarn cdk deploy
 
 .venv:
 	$(VIRTUALENV) .venv
