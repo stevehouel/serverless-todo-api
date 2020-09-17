@@ -60,6 +60,9 @@ export class InfraStack extends cdk.Stack {
     // Create App Client
     const userPoolAppClient = pool.addClient('UserPoolAppClient', {
       preventUserExistenceErrors: true,
+      authFlows: {
+        adminUserPassword: true,
+      },
       oAuth: {
         flows: {
           implicitCodeGrant: true,

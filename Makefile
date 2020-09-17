@@ -35,6 +35,7 @@ lint:
 
 test:
 	sh -c '. .venv/bin/activate; py.test -x lib/todo-api/tests'
+.PHONY: test
 
 install-python: .venv
 	.venv/bin/pip install -e ./lib/todo-api
