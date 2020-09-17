@@ -12,9 +12,11 @@ new PipelineStack(app, 'ServerlessTodoApi-PipelineStack', {
     ownerName: "nmoutschen"
 });
 
+const domainName = app.node.tryGetContext("domainName");
+
 // Implement Infra Stage for developer environment
 new InfraStage(app, 'ServerlessTodoApi-Dev', {
-    domainName: "fr-houes",
+    domainName: domainName ? domainName : 'fr-houes',
     callbackUrls: ['http://localhost', 'http://localhost:3000'],
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
