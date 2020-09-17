@@ -1,11 +1,11 @@
 import * as cdk from '@aws-cdk/core';
-import {CfnOutput, Duration, Fn} from '@aws-cdk/core';
+import {CfnOutput, Construct, Duration, Fn} from '@aws-cdk/core';
 import {CfnIdentityPool, CfnIdentityPoolRoleAttachment, Mfa, UserPool,} from '@aws-cdk/aws-cognito';
-import {Role, WebIdentityPrincipal} from "@aws-cdk/aws-iam";
+import {Role, ServicePrincipal, WebIdentityPrincipal} from "@aws-cdk/aws-iam";
 import {Asset} from "@aws-cdk/aws-s3-assets";
-import {AssetApiDefinition, SpecRestApi} from "@aws-cdk/aws-apigateway";
+import {AssetApiDefinition, RestApi, SpecRestApi} from "@aws-cdk/aws-apigateway";
 import {PythonFunction} from "@aws-cdk/aws-lambda-python";
-import {CfnFunction, Runtime, Tracing} from "@aws-cdk/aws-lambda";
+import {Alias, CfnFunction, Runtime, Tracing} from "@aws-cdk/aws-lambda";
 import {AttributeType, BillingMode, Table, TableEncryption} from "@aws-cdk/aws-dynamodb";
 
 interface CognitoStackProps extends cdk.StackProps {
@@ -79,30 +79,6 @@ export class InfraStack extends cdk.Stack {
     });
     identityPool.node.addDependency(pool, userPoolAppClient);
 
-    const authRole = new Role(this, 'AuthenticatedRole', {
-      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
-          .withConditions({
-            "StringEquals": { "cognito-identity.amazonaws.com:aud": identityPool.ref },
-            "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
-          })
-    });
-
-    const unauthRole = new Role(this, 'UnauthenticatedRole', {
-      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
-          .withConditions({
-            "StringEquals": { "cognito-identity.amazonaws.com:aud": identityPool.ref },
-            "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "unauthenticated"}
-          })
-    });
-
-    new CfnIdentityPoolRoleAttachment(this, 'identityPoolRoleattachement', {
-      identityPoolId: identityPool.ref,
-      roles: {
-        'unauthenticated': unauthRole.roleArn,
-        'authenticated': authRole.roleArn,
-      }
-    });
-
     // Table
     const table = new Table(this, 'TodoTable', {
       tableName: 'todo',
@@ -111,7 +87,7 @@ export class InfraStack extends cdk.Stack {
       encryption: TableEncryption.CUSTOMER_MANAGED,
     });
 
-    // API STACK
+    // Api Stack
     const createTodoFunction = this.createFunction('CreateTodoFunction','create_todo', table);
     const updateTodoFunction = this.createFunction('UpdateTodoFunction','update_todo', table);
     const getAllTodosFunction = this.createFunction('GetAllTodosFunction','get_all_todos', table);
@@ -136,6 +112,70 @@ export class InfraStack extends cdk.Stack {
 
     const api = new SpecRestApi(this, 'todoApi', {
       apiDefinition: AssetApiDefinition.fromInline(specsContent)
+    });
+
+    // Finally give permission to API to execute Lambda functions
+    // Add Invoke permission to functions
+    const principal = new ServicePrincipal('apigateway.amazonaws.com');
+    const createTodoArn = api.arnForExecuteApi('POST', '/todos');
+    const getAllTodosArn = api.arnForExecuteApi('GET', '/todos');
+    const getTodoArn = api.arnForExecuteApi('GET', '/todos/{idTodo}');
+    const deleteTodoArn = api.arnForExecuteApi('DELETE', '/todos/{idTodo}');
+    const updateTodoArn = api.arnForExecuteApi('PUT', '/todos/{idTodo}');
+
+    createTodoFunction.addPermission('CreateTodoPermission', {
+      principal,
+      scope: api,
+      sourceArn: createTodoArn,
+    });
+
+    getAllTodosFunction.addPermission('GetAllTodosPermission', {
+      principal,
+      scope: api,
+      sourceArn: getAllTodosArn,
+    });
+
+    getTodoFunction.addPermission('GetTodoPermission', {
+      principal,
+      scope: api,
+      sourceArn: getTodoArn,
+    });
+
+    updateTodoFunction.addPermission('UpdateTodoPermission', {
+      principal,
+      scope: api,
+      sourceArn: updateTodoArn,
+    });
+
+    deleteTodoFunction.addPermission('DeleteTodoPermission', {
+      principal,
+      scope: api,
+      sourceArn: deleteTodoArn,
+    });
+
+    // Create Auth and UnAuthRole in order to consume the API
+    const authRole = new Role(this, 'AuthenticatedRole', {
+      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
+          .withConditions({
+            "StringEquals": { "cognito-identity.amazonaws.com:aud": identityPool.ref },
+            "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+          })
+    });
+
+    const unauthRole = new Role(this, 'UnauthenticatedRole', {
+      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
+          .withConditions({
+            "StringEquals": { "cognito-identity.amazonaws.com:aud": identityPool.ref },
+            "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "unauthenticated"}
+          })
+    });
+
+    new CfnIdentityPoolRoleAttachment(this, 'identityPoolRoleattachement', {
+      identityPoolId: identityPool.ref,
+      roles: {
+        'unauthenticated': unauthRole.roleArn,
+        'authenticated': authRole.roleArn,
+      }
     });
 
     this.restApiId = new CfnOutput(this, 'restApiId', {
@@ -172,7 +212,7 @@ export class InfraStack extends cdk.Stack {
 
   }
 
-  createFunction(functionName: string, handler: string, table: Table): PythonFunction {
+  createFunction(functionName: string, handler: string, table: Table): Alias {
     const lambdaFunction = new PythonFunction(this, functionName, {
       functionName: functionName,
       entry: 'lib/todo-api',
@@ -187,11 +227,11 @@ export class InfraStack extends cdk.Stack {
       }
     });
 
-    lambdaFunction.currentVersion.addAlias('live');
+    const alias = lambdaFunction.currentVersion.addAlias('live');
 
     const forceLambdaId = lambdaFunction.node.defaultChild as CfnFunction;
     forceLambdaId.overrideLogicalId(functionName);
 
-    return lambdaFunction;
+    return alias;
   }
 }

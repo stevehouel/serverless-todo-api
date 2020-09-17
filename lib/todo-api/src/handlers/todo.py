@@ -12,9 +12,9 @@ from src.main import logger, tracer, table_name
 from src.schemas.todo_item import todo_item_schema, todo_items_schema
 
 
-@api_endpoint()
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context
+@api_endpoint()
 def get_all_todos(event, context, resource):
     try:
         table = resource.Table(table_name)
@@ -26,15 +26,14 @@ def get_all_todos(event, context, resource):
         return ValueError(str(e)), None
 
 
-@api_endpoint()
-@api_params(required=['todoId'])
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context
+@api_endpoint()
+@api_params(required=['todoId'])
 def get_todo(event, context, resource, todoId):
     try:
         table = resource.Table(table_name)
         result = table.get_item(Key={'todoId': todoId})
-        logger.info(result)
         if 'Item' not in result:
             return {
                        'statusCode': '404',
@@ -50,9 +49,9 @@ def get_todo(event, context, resource, todoId):
         return ValueError(str(e)), None
 
 
-@api_endpoint(success_code='201')
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context
+@api_endpoint()
 def create_todo(event, context, resource):
     try:
         # Get Table resource
@@ -72,7 +71,6 @@ def create_todo(event, context, resource):
                 'updatedAt': date.today().strftime("%m/%d/%Y")
             }
         )
-        logger.info(response)
         return None, todoId
     except (TypeError, ValueError) as err:
         return err, None
@@ -80,10 +78,10 @@ def create_todo(event, context, resource):
         return ValueError(str(e)), None
 
 
-@api_endpoint()
-@api_params(required=['todoId'])
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context
+@api_endpoint()
+@api_params(required=['todoId'])
 def update_todo(event, context, resource, todoId):
     try:
         table = resource.Table(table_name)
@@ -106,7 +104,6 @@ def update_todo(event, context, resource, todoId):
             },
             ReturnValues="ALL_NEW"
         )
-        logger.info(results)
         return None, todo_item_schema.dump(results['Attributes'])
     except (TypeError, ValueError) as err:
         return err, None
@@ -114,10 +111,10 @@ def update_todo(event, context, resource, todoId):
         return ValueError(str(e)), None
 
 
-@api_endpoint()
-@api_params(required=['todoId'])
 @tracer.capture_lambda_handler
 @logger.inject_lambda_context
+@api_endpoint()
+@api_params(required=['todoId'])
 def delete_todo(event, context, resource, todoId):
     try:
         table = resource.Table(table_name)

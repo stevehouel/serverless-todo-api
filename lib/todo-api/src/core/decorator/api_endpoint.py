@@ -4,7 +4,7 @@ from src.core.request import Request
 from src.core.response import response
 
 
-def api_endpoint(success_code='200'):
+def api_endpoint():
     """Decorate a lambda function endpoint with user access checking"""
     def decorator(func):
         @wraps(func)
@@ -19,6 +19,6 @@ def api_endpoint(success_code='200'):
                 err, res = e, None
                 err.status_code = '500'
 
-            return response(err, res, success_code)
+            return response(err, res)
         return decorated
     return decorator
