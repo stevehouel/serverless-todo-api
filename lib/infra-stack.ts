@@ -60,9 +60,6 @@ export class InfraStack extends cdk.Stack {
     // Create App Client
     const userPoolAppClient = pool.addClient('UserPoolAppClient', {
       preventUserExistenceErrors: true,
-      authFlows: {
-        adminUserPassword: true,
-      },
       oAuth: {
         flows: {
           implicitCodeGrant: true,
@@ -86,8 +83,23 @@ export class InfraStack extends cdk.Stack {
     const table = new Table(this, 'TodoTable', {
       tableName: 'todo',
       partitionKey: { name: 'todoId', type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-      encryption: TableEncryption.CUSTOMER_MANAGED,
+      removalPolicy:  cdk.RemovalPolicy.DESTROY,
+      readCapacity: 1,
+      writeCapacity: 1
+    });
+        
+    table.metricConsumedReadCapacityUnits().createAlarm(this, 'ReadCapacityUnitsLimit-BasicAlarm', {
+          threshold: 240,
+          evaluationPeriods: 1,
+          period: cdk.Duration.minutes(1),
+          alarmName: `${table.tableName}-ReadCapacityUnitsLimit-BasicAlarm`,
+        });
+        
+    table.metricConsumedReadCapacityUnits().createAlarm(this, 'WriteCapacityUnitsLimit-BasicAlarm', {
+      threshold: 240,
+      evaluationPeriods: 1,
+      period: cdk.Duration.minutes(1),
+      alarmName: `${table.tableName}-WriteCapacityUnitsLimit-BasicAlarm`,
     });
 
     // Api Stack
@@ -114,7 +126,10 @@ export class InfraStack extends cdk.Stack {
     const specsContent = Fn.transform('AWS::Include', {'Location': asset.s3ObjectUrl})
 
     const api = new SpecRestApi(this, 'todoApi', {
-      apiDefinition: AssetApiDefinition.fromInline(specsContent)
+      apiDefinition: AssetApiDefinition.fromInline(specsContent),
+      deployOptions: {
+        dataTraceEnabled: true
+      }
     });
 
     // Finally give permission to API to execute Lambda functions
@@ -223,7 +238,7 @@ export class InfraStack extends cdk.Stack {
       handler: handler,
       runtime: Runtime.PYTHON_3_8,
       profiling: true,
-      timeout: Duration.seconds(10),
+      timeout: Duration.seconds(60),
       tracing: Tracing.ACTIVE,
       environment: {
         TABLE_NAME: table.tableName,

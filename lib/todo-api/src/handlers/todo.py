@@ -63,7 +63,7 @@ def create_todo(event, context, resource):
 
         assert 'title' in body, 'Title field is required'
         todoId = str(uuid.uuid4())
-        response = table.put_item(
+        table.put_item(
             Item={
                 'todoId': todoId,
                 'title': body['title'],

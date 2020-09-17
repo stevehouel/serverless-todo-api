@@ -4,7 +4,7 @@ from src.main import logger
 
 
 def response(err, res=None):
-    status='200'
+    status = '200'
     if err:
         status = getattr(err, 'status_code', '400')
         logger.error("Client response code: %s", status)
