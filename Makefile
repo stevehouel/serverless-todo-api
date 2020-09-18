@@ -20,6 +20,7 @@ install:
 	yarn install --frozen-lockfile
 	# Install Python dependencies
 	@make install-python
+	@make install-artillery
 
 
 build:
@@ -37,11 +38,19 @@ test:
 	sh -c '. .venv/bin/activate; py.test -x lib/todo-api/tests'
 .PHONY: test
 
+
+
 install-python: .venv
 	.venv/bin/pip install -e ./lib/todo-api
 ifneq ($(wildcard ./lib/todo-api/test-requirements.txt),)
 	.venv/bin/pip install -r ./lib/todo-api/test-requirements.txt
 endif
+
+install-artillery:
+	cd stressTest && yarn install
+
+stress:
+	cd stressTest && yarn test
 
 bootstrap:
 	@make install

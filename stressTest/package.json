@@ -1,0 +1,15 @@
+{
+  "name": "stresstest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "artillery run script.yml"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "artillery-plugin-aws-sigv4": "0.0.5",
+    "artillery": "1.6.1"
+  }
+}

@@ -1,0 +1,24 @@
+  config:
+    plugins:
+      aws-sigv4:
+        serviceName: "execute-api"
+    target: 'https://7da7r93p2l.execute-api.eu-west-1.amazonaws.com/prod'
+    phases:
+        - duration: 1
+          arrivalRate: 1
+    defaults:
+      headers:
+        Content-type: 'application/json'
+  scenarios:
+    - name: "GET todos"
+      beforeRequest: "addAmazonSignatureV4"
+      flow:
+      - post:
+          url: "/todos"
+          json:
+            title: "That's really todo today"
+            content: "Why not postponing to tomorrow ???"
+      - get:
+          url: "/todos"
+      
+
