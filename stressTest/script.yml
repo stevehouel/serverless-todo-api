@@ -2,7 +2,7 @@
     plugins:
       aws-sigv4:
         serviceName: "execute-api"
-    target: 'https://7da7r93p2l.execute-api.eu-west-1.amazonaws.com/prod'
+    target: "{{ $processEnvironment.TODO_API_ENDPOINT }}"
     phases:
         - duration: 1
           arrivalRate: 1
