@@ -131,7 +131,7 @@ paths:
   '/todos/{todoId}':
     parameters:
       - in: path
-        name: idTodo
+        name: todoId
         schema:
           type: string
         required: true
