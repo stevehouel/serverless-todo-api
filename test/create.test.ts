@@ -17,6 +17,11 @@ test('create todo', async () => {
   });
   
   axios.interceptors.request.use(interceptor);
+  axios.interceptors.response.use((response: any) => {
+    return response;
+  }, (error: any) => {
+    return error.response;
+  });
 
   // Create a new TODO
   const todoCreateRequest = {
@@ -27,9 +32,12 @@ test('create todo', async () => {
   const createResponse = await axios.post(apiEndpoint + '/todos', todoCreateRequest);
   console.log('Response', createResponse.data);
 
+  expect(createResponse.status).toBe(200);
+
   // Retrieve the TODO
   console.log('GET Address', apiEndpoint + '/todos/' + createResponse.data);
   const getResponse = await axios.get(apiEndpoint + '/todos/' + createResponse.data);
+  console.log('Response', getResponse.data);
 
   expect(getResponse.status).toBe(200);
   expect(getResponse.data.title).toBe(todoCreateRequest.title);

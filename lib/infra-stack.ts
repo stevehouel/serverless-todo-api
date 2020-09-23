@@ -137,9 +137,9 @@ export class InfraStack extends cdk.Stack {
     const principal = new ServicePrincipal('apigateway.amazonaws.com');
     const createTodoArn = api.arnForExecuteApi('POST', '/todos');
     const getAllTodosArn = api.arnForExecuteApi('GET', '/todos');
-    const getTodoArn = api.arnForExecuteApi('GET', '/todos/{idTodo}');
-    const deleteTodoArn = api.arnForExecuteApi('DELETE', '/todos/{idTodo}');
-    const updateTodoArn = api.arnForExecuteApi('PUT', '/todos/{idTodo}');
+    const getTodoArn = api.arnForExecuteApi('GET', '/todos/{todoId}');
+    const deleteTodoArn = api.arnForExecuteApi('DELETE', '/todos/{todoId}');
+    const updateTodoArn = api.arnForExecuteApi('PUT', '/todos/{todoId}');
 
     createTodoFunction.addPermission('CreateTodoPermission', {
       principal,
