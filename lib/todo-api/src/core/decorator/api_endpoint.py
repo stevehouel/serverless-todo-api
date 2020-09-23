@@ -12,6 +12,8 @@ def api_endpoint():
             try:
                 resource = get_resource()
                 Request(event=event, resource=resource)
+                # Assign request to context
+                context.request = req
                 # Call method and manage session in case of error
                 err, res = func(event, context, resource)
             except Exception as e:
