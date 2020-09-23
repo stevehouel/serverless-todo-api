@@ -38,6 +38,8 @@ test:
 	sh -c '. .venv/bin/activate; py.test -x lib/todo-api/tests'
 .PHONY: test
 
+test-integ:
+	TODO_API_ENDPOINT=$(shell aws cloudformation describe-stacks --stack-name ServerlessTodoApi-Dev-ServerlessTodoApi-Infra --query "Stacks[0].Outputs[?OutputKey=='todoApiEndpoint6114C0A4'].OutputValue" --output text) npm run test
 
 
 install-python: .venv
