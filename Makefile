@@ -60,7 +60,7 @@ bootstrap:
 	CDK_NEW_BOOTSTRAP=1 yarn cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
 
 deploy: 
-	yarn cdk deploy
+	cdk deploy
 
 .venv:
 	$(VIRTUALENV) .venv
