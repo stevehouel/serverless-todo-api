@@ -47,7 +47,7 @@ export class PipelineStack extends Stack {
 
     // Beta Stage
     pipeline.addApplicationStage(new InfraStage(this, 'ServerlessTodoApi-Beta', {
-      domainName: 'todo-beta',
+      domainName: 'todo-beta-grazzini',
       callbackUrls: [ 'http://localhost:3000' ]
     }));
 
