@@ -1,5 +1,5 @@
 -r requirements.txt
 
-flake8
-awscli
-aws-sam-cli
+flake8==3.9.2
+awscli==1.19.104
+aws-sam-cli==1.25.0

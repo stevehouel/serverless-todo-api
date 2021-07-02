@@ -50,5 +50,6 @@ export class PipelineStack extends Stack {
       domainName: 'todo-beta',
       callbackUrls: [ 'http://localhost:3000' ]
     }));
+
   }
 }

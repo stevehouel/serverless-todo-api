@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest --silent",
+    "test": "jest --silent --testTimeout=10000",
     "cdk": "cdk",
     "lint": "eslint --ext .ts lib"
   },
