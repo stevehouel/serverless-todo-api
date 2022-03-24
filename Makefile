@@ -11,7 +11,6 @@ export PYTHONUNBUFFERED := 1
 export PATH := var:$(PATH):$(VENV_DIR)/bin
 export TABLE_NAME := todo
 export AWS_REGION = eu-west-1
-export TODO_API_ENDPOINT=https://5yvisnnmth.execute-api.eu-west-1.amazonaws.com/prod
 FUNCTION_DIR = lib/todo-api
 
 .DEFAULT_GOAL := lint
