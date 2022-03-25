@@ -47,6 +47,10 @@ set the environment variable TODO_API_ENDPOINT to the endpoint of your API Gatew
 
 for example:
 ```
+export TODO_API_ENDPOINT=$(aws cloudformation describe-stacks --stack-name ServerlessTodoApi-Dev-ServerlessTodoApi-Infra --query "Stacks[0].Outputs[?OutputKey=='todoApiEndpoint6114C0A4'].OutputValue" --output text))
+```
+or
+```
 export TODO_API_ENDPOINT=https://123456789.execute-api.eu-west-1.amazonaws.com/prod
 ```
 

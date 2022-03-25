@@ -176,4 +176,5 @@ node_modules
 
 # Parcel default cache directory
 .parcel-cache
-
+yarn-error.log
+pylint.out
